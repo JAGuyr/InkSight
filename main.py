@@ -5,11 +5,21 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 import os, uuid, requests, base64
 from supabase import create_client, Client
+from fastapi import FastAPI
 import os
 import uvicorn
 
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"message": "Hello Railway!"}
+
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+    # Use PORT environment variable set by Railway or default to 8000 locally
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
+
 
 
 app = FastAPI()
