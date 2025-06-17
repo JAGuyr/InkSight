@@ -1,10 +1,20 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import base64
 from io import BytesIO
 from fastapi.responses import StreamingResponse
 
 app = FastAPI(title="InkSight – AI Tattoo Placement")
+
+# ✅ Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can restrict to FlutterFlow domain later
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 HUGGINGFACE_API_TOKEN = "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"
 MODEL_URL = "https://api-inference.huggingface.co/models/Fantasy-Studio/Paint-by-Example"
