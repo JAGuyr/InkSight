@@ -86,3 +86,9 @@ async def compose_tattoo(body: UploadFile = File(...), tattoo: UploadFile = File
         return {"url": public_url}
     except Exception as e:
         return JSONResponse(content={"error": "Unexpected error", "details": str(e)}, status_code=500)
+
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
+
