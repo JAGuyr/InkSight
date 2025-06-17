@@ -4,6 +4,27 @@ from fastapi.responses import JSONResponse
 import requests, base64, os, uuid
 from io import BytesIO
 from supabase import create_client, Client
+from fastapi.responses import JSONResponse
+from fastapi.requests import Request
+from fastapi.exception_handlers import http_exception_handler
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+# Catch-all CORS-friendly error response
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    response = await http_exception_handler(request, exc)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()},
+        headers={"Access-Control-Allow-Origin": "*"},
+    )
+
 
 # Initialize FastAPI
 app = FastAPI(title="InkSight – AI Tattoo Placement")
