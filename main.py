@@ -5,6 +5,12 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 import os, uuid, requests, base64
 from supabase import create_client, Client
+import os
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+
 
 app = FastAPI()
 
