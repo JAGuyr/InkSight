@@ -1,9 +1,15 @@
 services:
   - type: web
-    name: fastapi-tattoo-backend
+    name: inksight
     env: python
     buildCommand: ""
     startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     envVars:
       - key: HUGGINGFACE_API_TOKEN
-        value: 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
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        sync: false
